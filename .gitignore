@@ -19,6 +19,8 @@ $RECYCLE.BIN/
 
 #Debug logs and such
 Debug/
+Debug/*
+*.log
 
 # Windows shortcuts
 *.lnk
