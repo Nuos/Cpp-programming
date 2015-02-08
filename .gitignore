@@ -17,6 +17,9 @@ $RECYCLE.BIN/
 #Windows binaries
 *.exe
 
+#Debug logs and such
+Debug/
+
 # Windows shortcuts
 *.lnk
 
