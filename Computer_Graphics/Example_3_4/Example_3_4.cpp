@@ -24,12 +24,21 @@
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "my_sphere.h"
+#include "physics_object.h"
+#include <ctime>
 
 //======================================================
 // CONSTANTS 
 //======================================================
 // Square size
 #define size 50.0
+
+//REFERENCE TO SPHERE
+physics_object* physics_obj;
+
+//TIME TRACKER
+clock_t prevTime;
 
 //======================================================
 // GLOBAL VARIABLES WRITTEN TO BY reshapeCallBack( )
@@ -64,11 +73,20 @@ void idleCallBack()
 {
 	// Changes to X and Y are entirely seperate, one does not require the other.
 
-	square_x += square_dx; // Increment x-position of square
-	square_y += square_dy; // Increment y-position of square - *** New for Solution ***
-	
-	if (square_x > w_width || square_x ==0) square_dx *= -1; // Reverse direction if at width edges (as the change is on the X-Axis)
-	if (square_y > w_height || square_y ==0) square_dy *= -1; // Reverse direction if at height edges (as the change is on the Y-Axis) - *** New for Solution ***
+	//square_x += square_dx; // Increment x-position of square
+	//square_y += square_dy; // Increment y-position of square - *** New for Solution ***
+
+	clock_t currTime = clock();
+	if(prevTime == NULL) {
+		prevTime = currTime;
+	}
+	clock_t deltaTime = currTime - prevTime;
+	prevTime = currTime;
+
+	physics_obj->advance(((float)deltaTime)/CLOCKS_PER_SEC);
+
+	if (physics_obj->displacement.x > w_width || physics_obj->displacement.x <= 0) physics_obj->bounce(-1,1,1); // Reverse direction if at width edges (as the change is on the X-Axis)
+	if (physics_obj->displacement.y > w_height || physics_obj->displacement.y <= 0) physics_obj->bounce(1,-1,1); // Reverse direction if at height edges (as the change is on the Y-Axis) - *** New for Solution ***
 
 	glutPostRedisplay();
 }
@@ -144,17 +162,18 @@ void displayCallBack(void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity(); 
-	glTranslatef(square_x, square_y, 0.0);
-	glRotatef(theta, 0, 0, 1.0);
+	//glTranslatef(square_x, square_y, 0.0);
+	//glRotatef(theta, 0, 0, 1.0);
 
-	glBegin(GL_POLYGON);
-		glColor3ub( 255, 255, 0);
-		glVertex2f(size, size);
-		glVertex2f(-size, size);
-		glVertex2f(-size, -size);
-		glVertex2f(+size, -size);
-	glEnd();
+	//glBegin(GL_POLYGON);
+	//	glColor3ub( 255, 255, 0);
+	//	glVertex2f(size, size);
+	//	glVertex2f(-size, size);
+	//	glVertex2f(-size, -size);
+	//	glVertex2f(+size, -size);
+	//glEnd();
 
+	physics_obj->draw();
 	
 	//Swap double buffers 
 	glutSwapBuffers();
@@ -199,6 +218,9 @@ int main(int argc, char** argv)
 	printf("Key \"I\" - Enables idle callbacks.\n");
 	printf("Key \"i\" - Disables idle callbacks.\n");
 	printf("Key \"r\" - Rotates square.\n");
+
+	//create sphere
+	physics_obj = new physics_object(0.5,new my_sphere(400,400,-50,50,50));
 
 	// Enter main event loop
 	glutMainLoop();
