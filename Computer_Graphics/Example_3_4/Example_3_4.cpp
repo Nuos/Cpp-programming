@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include "my_sphere.h"
 #include "physics_object.h"
+#include "my_emitter.h"
 #include <ctime>
 
 //======================================================
@@ -36,6 +37,7 @@
 
 //REFERENCE TO SPHERE
 physics_object* physics_obj;
+my_emitter* particle_system;
 
 //TIME TRACKER
 clock_t prevTime;
@@ -83,10 +85,28 @@ void idleCallBack()
 	clock_t deltaTime = currTime - prevTime;
 	prevTime = currTime;
 
-	physics_obj->advance(((float)deltaTime)/CLOCKS_PER_SEC);
+	float delta = ((float)deltaTime)/CLOCKS_PER_SEC;
+	
+	particle_system->update(delta);
 
-	if (physics_obj->displacement.x > w_width || physics_obj->displacement.x <= 0) physics_obj->bounce(-1,1,1); // Reverse direction if at width edges (as the change is on the X-Axis)
-	if (physics_obj->displacement.y > w_height || physics_obj->displacement.y <= 0) physics_obj->bounce(1,-1,1); // Reverse direction if at height edges (as the change is on the Y-Axis) - *** New for Solution ***
+	physics_obj->advance(delta);
+
+	if (physics_obj->displacement.x > w_width) {
+		physics_obj->bounce(-1,1,1); // Reverse direction if at width edges (as the change is on the X-Axis)
+		physics_obj->displacement.x = w_width;
+	}
+	else if(physics_obj->displacement.x < 0) {
+		physics_obj->bounce(-1,1,1); // Reverse direction if at width edges (as the change is on the X-Axis)
+		physics_obj->displacement.x = 0;
+	}
+	if (physics_obj->displacement.y > w_height) {
+		physics_obj->bounce(1,-1,1); // Reverse direction if at height edges (as the change is on the Y-Axis) - *** New for Solution ***
+		physics_obj->displacement.y = w_height;
+	}
+	else if(physics_obj->displacement.y < 0) {
+		physics_obj->bounce(1,-1,1); // Reverse direction if at height edges (as the change is on the Y-Axis) - *** New for Solution ***
+		physics_obj->displacement.y = 0;
+	}
 
 	glutPostRedisplay();
 }
@@ -162,17 +182,8 @@ void displayCallBack(void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity(); 
-	//glTranslatef(square_x, square_y, 0.0);
-	//glRotatef(theta, 0, 0, 1.0);
 
-	//glBegin(GL_POLYGON);
-	//	glColor3ub( 255, 255, 0);
-	//	glVertex2f(size, size);
-	//	glVertex2f(-size, size);
-	//	glVertex2f(-size, -size);
-	//	glVertex2f(+size, -size);
-	//glEnd();
-
+	particle_system->draw();
 	physics_obj->draw();
 	
 	//Swap double buffers 
@@ -204,6 +215,10 @@ int main(int argc, char** argv)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutSwapBuffers();
 
+	glEnable (GL_BLEND);
+
+	glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
 	// Set up callbacks
 	glutMouseFunc (mouseCallBack);
 	glutKeyboardFunc(keyboardCallBack);
@@ -220,7 +235,9 @@ int main(int argc, char** argv)
 	printf("Key \"r\" - Rotates square.\n");
 
 	//create sphere
-	physics_obj = new physics_object(0.5,new my_sphere(400,400,-50,50,50));
+	physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
+	//create particle system
+	particle_system = new my_emitter(600,400,0,360);
 
 	// Enter main event loop
 	glutMainLoop();

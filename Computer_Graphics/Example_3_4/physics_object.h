@@ -5,6 +5,9 @@
 class physics_object
 {
 public:
+	float BOUNCE_FACTOR;
+	float ENERGY_LOSS;
+
 	my_vector displacement;
 
 	physics_object(float,my_drawable*);
@@ -13,8 +16,11 @@ public:
 	void advance(float);
 	void draw();
 	void bounce(int,int,int);
+
+	void applyImpulse(float,float,float);
+	void applyForce(float,float,float);
 private:
-	my_vector velocity,gravity;
+	my_vector velocity,gravity,directional_force;
 	float mass;
 
 	my_drawable* obj;
