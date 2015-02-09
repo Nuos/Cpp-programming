@@ -19,6 +19,9 @@ public:
 
 	void applyImpulse(float,float,float);
 	void applyForce(float,float,float);
+
+	void disableGravity();
+	void enableGravity();
 private:
 	my_vector velocity,gravity,directional_force;
 	float mass;

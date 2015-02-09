@@ -57,3 +57,11 @@ void physics_object::applyImpulse(float newX,float newY, float newZ) {
 	velocity.y = newY;
 	velocity.z = newZ;
 }
+
+void physics_object::disableGravity() {
+	gravity = my_vector(0,0,0);
+}
+
+void physics_object::enableGravity() {
+	gravity = my_vector(0,-9.81,0);
+}

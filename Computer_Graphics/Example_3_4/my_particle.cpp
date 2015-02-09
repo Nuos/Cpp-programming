@@ -37,7 +37,7 @@ void my_particle::reset(float x, float y, float z, float magnitude) {
 	//reset velocity
 	obj->applyImpulse(0,0,0);
 	//apply the directional force
-	direction->normalise();
+	direction = direction->normalise();
 	*direction = *direction * magnitude;
 	obj->applyForce(direction->x,direction->y,direction->z);
 }

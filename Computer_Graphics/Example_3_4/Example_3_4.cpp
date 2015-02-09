@@ -71,23 +71,22 @@ int square_dy = 1; // Incremental Rate Change for square_y - *** New for Solutio
 //======================================================
 // IDLE CALLBACK ROUTINE 
 //======================================================
-void idleCallBack()
-{
-	// Changes to X and Y are entirely seperate, one does not require the other.
-
-	//square_x += square_dx; // Increment x-position of square
-	//square_y += square_dy; // Increment y-position of square - *** New for Solution ***
-
+float getTime() {
 	clock_t currTime = clock();
 	if(prevTime == NULL) {
 		prevTime = currTime;
 	}
 	clock_t deltaTime = currTime - prevTime;
 	prevTime = currTime;
-
-	float delta = ((float)deltaTime)/CLOCKS_PER_SEC;
 	
-	particle_system->update(delta);
+	float delta = ((float)deltaTime)/CLOCKS_PER_SEC;
+
+	return delta;
+}
+
+void bouncingBallCallback() {
+	
+	float delta = getTime();
 
 	physics_obj->advance(delta);
 
@@ -109,6 +108,51 @@ void idleCallBack()
 	}
 
 	glutPostRedisplay();
+}
+
+void particleSystemCallback()
+{
+	float delta = getTime();
+	
+	particle_system->update(delta);
+	
+	glutPostRedisplay();
+}
+
+void preDraw() {
+	printf("Display call back %d\n", display_count++);
+
+	glClearColor (0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity(); 
+}
+
+void postDraw() {
+	//Swap double buffers 
+	glutSwapBuffers();
+}
+
+//======================================================
+// DISPLAY CALL BACK ROUTINE 
+//======================================================
+void bouncingBallDraw(void)
+{	
+	preDraw();
+
+	physics_obj->draw();
+
+	postDraw();
+}
+
+void particleSystemDraw(void)
+{
+	preDraw();
+	
+	particle_system->draw();
+
+	postDraw();
 }
 
 //======================================================
@@ -151,43 +195,25 @@ void keyboardCallBack(unsigned char key, int x, int y)
 	printf("Keyboard call back: key=%c, x=%d, y=%d, theta=%f\n", key, x, y, theta);
 	switch(key)
 	{
-	case 'I':
-		glutIdleFunc(idleCallBack);
-		printf("Idle function ON\n");
+	case 'B':
+		prevTime = NULL;
+		delete physics_obj;
+		physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
+		glutIdleFunc(bouncingBallCallback);
+		glutDisplayFunc(bouncingBallDraw);
 	break;
-	case 'i':
-		glutIdleFunc(NULL);
-		printf("Idle function OFF\n");
-	break;
-	case 'r':
-		theta = theta + 10.0;
+	case 'P':
+		prevTime = NULL;
+		delete particle_system;
+		particle_system = new my_emitter(600,400,0,360);
+		glutIdleFunc(particleSystemCallback);
+		glutDisplayFunc(particleSystemDraw);
 	break;
 	default:
-		printf("Press i (Idle Off), I (Idle ON) or r (Rotate)");
+		printf("Unknown command.\n");
 	}
 
 	glutPostRedisplay();
-}
-
-
-//======================================================
-// DISPLAY CALL BACK ROUTINE 
-//======================================================
-void displayCallBack(void)
-{	
-	printf("Display call back %d\n", display_count++);
-
-	glClearColor (0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity(); 
-
-	particle_system->draw();
-	physics_obj->draw();
-	
-	//Swap double buffers 
-	glutSwapBuffers();
 }
 
 //======================================================
@@ -223,21 +249,19 @@ int main(int argc, char** argv)
 	glutMouseFunc (mouseCallBack);
 	glutKeyboardFunc(keyboardCallBack);
 	glutMotionFunc(motionCallBack);
-	glutDisplayFunc(displayCallBack);
 	glutReshapeFunc(reshapeCallback);
 
 	// Print Application Usage
 	printf("Program Controls:\n");
-	printf("Left Mouse Button & Drag - Draws the square at mouse location.\n");
 	printf("Right Mouse Button - Exits the program.\n");
-	printf("Key \"I\" - Enables idle callbacks.\n");
-	printf("Key \"i\" - Disables idle callbacks.\n");
-	printf("Key \"r\" - Rotates square.\n");
+	printf("B key - demonstrates the bouncing ball.\n");
+	printf("P key - demonstrates the particle system.\n");
+	printf("F key - demonstrates the flocking behaviour.\n");
 
 	//create sphere
-	physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
+	//physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
 	//create particle system
-	particle_system = new my_emitter(600,400,0,360);
+	//particle_system = new my_emitter(600,400,0,360);
 
 	// Enter main event loop
 	glutMainLoop();

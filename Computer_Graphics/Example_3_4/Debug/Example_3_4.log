@@ -1,14 +1,17 @@
-﻿Build started 08/02/2015 18:42:30.
+﻿Build started 09/02/2015 12:46:51.
      1>Project "C:\Users\Mindy\Desktop\CompGamesProgramming\Computer_Graphics\Example_3_4\Example_3_4.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Example_3_4.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Example_3_4.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Example_3_4.cpp my_emitter.cpp my_particle.cpp my_vector.cpp physics_object.cpp
+         my_vector.cpp
+         my_particle.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         physics_object.cpp
+         my_emitter.cpp
          Example_3_4.cpp
-     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\example_3_4.cpp(96): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\example_3_4.cpp(104): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\example_3_4.cpp(163): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -35,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.25
+Time Elapsed 00:00:00.51
