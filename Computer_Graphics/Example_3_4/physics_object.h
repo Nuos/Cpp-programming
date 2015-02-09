@@ -27,6 +27,7 @@ public:
 	inline my_vector getVelocity() { return velocity; }
 	inline void setEnergyLoss(float newVal) { ENERGY_LOSS = newVal; }
 	inline void setMaxVelocity(float newVal) { MAX_VELOCITY = newVal; }
+	inline void setDisplacement(my_vector newVal) { displacement = newVal; obj->x = newVal.x; obj->y = newVal.y; obj->z = newVal.z; }
 private:
 	my_vector velocity,gravity,directional_force;
 	float mass;

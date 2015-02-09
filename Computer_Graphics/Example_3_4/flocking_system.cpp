@@ -4,10 +4,11 @@
 
 flocking_system::flocking_system(float newX, float newY, float newZ, int noOfAgents)
 {
-	AGENT_SPEED = 200;
-	ALIGNMENT = 0.0;
-	COHESION = 0.0;
-	SEPARATION = 1;
+	AGENT_SPEED = 100;
+	MAX_FORCE = 200;
+	ALIGNMENT = 0.5;
+	COHESION = 0.5;
+	SEPARATION = 0.5;
 	agents = new std::vector<flocking_agent*>();
 
 	for(int i = 0; i < noOfAgents; i++) {
@@ -53,46 +54,65 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 			if(i == j)
 				continue;
 			flocking_agent* a2 = agentArray[j];
-			if(a1->getDistanceVector(a2,w_width,w_height).length() < a1->radius) {
-				//compute alignment
-				alignment.x += a2->getVelocity().x;
-				alignment.y += a2->getVelocity().y;
+			my_vector distanceVec = a1->getDistanceVector(a2,w_width,w_height);
+			if(distanceVec.length() < a1->radius) {
+				//FOV refinement
+				float angle = acos(a1->getVelocity().normalise()->dotProduct(*distanceVec.normalise()))*180.0/M_PI-180;
+				printf("Angle: %f!\n",angle);
+				if(angle >= -120 && angle <= 120) {
+					//compute alignment
+					alignment = alignment + a2->getVelocity();
 
-				//compute cohesion
-				cohesion.x += a2->getDisplacement().x;
-				cohesion.y += a2->getDisplacement().y;
+					//compute cohesion
+					cohesion = cohesion + a2->getDisplacement();
 
-				//compute separation
-				separation.x += a2->getDisplacement().x - a1->getDisplacement().x;
-				separation.y += a2->getDisplacement().y - a1->getDisplacement().y;
+					//compute separation
+					separation = separation + *(a1->getDistanceVector(a2,w_width,w_height)).normalise();
 
-				neighbourCount++;
+					neighbourCount++;
+				}
 			}
 		}
 		if(neighbourCount != 0) {
+			a1->setColour(my_vector(255,255,0));
 			//compute alignment
-			alignment.x = alignment.x / neighbourCount;
-			alignment.y = alignment.y / neighbourCount;
-			alignment = *alignment.normalise();
+			alignment = (alignment / neighbourCount) - a1->getVelocity();
 
 			//compute cohesion
-			cohesion.x = cohesion.x / neighbourCount;
-			cohesion.y = cohesion.y / neighbourCount;
-			cohesion = my_vector(cohesion.x - a1->getDisplacement().x, cohesion.y - a1->getDisplacement().y,0);
-			cohesion = *cohesion.normalise();
+			cohesion = cohesion / neighbourCount;
+			cohesion = *(cohesion - a1->getDisplacement()).normalise()*AGENT_SPEED - a1->getVelocity();
+			//cohesion = *(cohesion - a1->getDisplacement()).normalise();
 
-			//compute separation
-			separation.x = separation.x / neighbourCount;
-			separation.y = separation.y / neighbourCount;
-			separation.x *= -1;
-			separation.y *= -1;
-			separation = *separation.normalise();
-
+			//prioritised dithering - TODO: optimisation, such that this is performed at the beginning, and only the chosen vector is computed
+			float probability = rand() / (RAND_MAX + 1.);
+			if(probability < ALIGNMENT) {
+				a1->changeDirection(*alignment.normalise()*MAX_FORCE,deltaTime);
+			}
+			else {
+				probability = rand() / (RAND_MAX + 1.);
+				if(probability < COHESION) {
+					a1->changeDirection(*cohesion.normalise()*MAX_FORCE,deltaTime);
+				}
+				else {
+					probability = rand() / (RAND_MAX + 1.);
+					if(probability < SEPARATION) {
+						a1->changeDirection(*separation.normalise()*MAX_FORCE,deltaTime);
+					}
+					else
+						a1->wander(deltaTime);
+				}
+			}
 			
-			my_vector vec = alignment*ALIGNMENT + cohesion*COHESION + separation*SEPARATION;
-			vec = vec*AGENT_SPEED;
+			//old - weighted sum
+			//my_vector vec = *alignment.normalise()*ALIGNMENT + *cohesion.normalise()*COHESION + *separation.normalise()*SEPARATION;
+			//vec = *vec.normalise()*MAX_FORCE;
 
-			a1->changeDirection(vec, deltaTime);
+			//a1->changeDirection(vec, deltaTime);
+		}
+		//wander - go where you were going
+		else {
+			a1->setColour(my_vector(0,0,255));
+			a1->wander(deltaTime);
 		}
 
 		//check screen boundaries

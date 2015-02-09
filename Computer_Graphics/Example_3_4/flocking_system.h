@@ -14,6 +14,7 @@ public:
 	float ALIGNMENT;
 	float COHESION;
 	float SEPARATION;
+	float MAX_FORCE;
 
 	void draw();
 private:

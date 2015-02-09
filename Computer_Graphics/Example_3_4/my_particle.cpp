@@ -29,10 +29,8 @@ void my_particle::draw() {
 	glPopMatrix();
 }
 
-void my_particle::reset(float x, float y, float z, float magnitude) {
-	obj->displacement.x = x;
-	obj->displacement.y = y;
-	obj->displacement.z = z;
+void my_particle::reset(float newX, float newY, float newZ, float magnitude) {
+	obj->setDisplacement(my_vector(newX,newY,newZ));
 	lifespan = lifespanMax;
 	//reset velocity
 	obj->applyImpulse(0,0,0);

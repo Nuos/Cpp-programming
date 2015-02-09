@@ -9,15 +9,19 @@ public:
 
 	inline my_vector getVelocity() { return obj->getVelocity(); }
 	inline my_vector getDisplacement() { return obj->displacement; }
-	inline void setDisplacement(my_vector newValue) { obj->displacement = newValue; }
+	inline void setDisplacement(my_vector newValue) { obj->setDisplacement(newValue); }
 
-	inline void draw() { obj->draw(); }
+	inline void wander(float deltaTime) { obj->advance(deltaTime); }
 
 	void changeDirection(my_vector, float);
 	my_vector getDistanceVector(flocking_agent*,int,int);
+	void draw();
+
+	inline void setColour(my_vector newVal) { colour = newVal; }
 
 	float radius;
 private:
 	physics_object* obj;
+	my_vector colour;
 };
 
