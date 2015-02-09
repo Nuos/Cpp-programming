@@ -28,6 +28,7 @@
 #include "physics_object.h"
 #include "my_emitter.h"
 #include <ctime>
+#include "flocking_system.h"
 
 //======================================================
 // CONSTANTS 
@@ -35,9 +36,10 @@
 // Square size
 #define size 50.0
 
-//REFERENCE TO SPHERE
+//REFERENCE TO OBJECTS
 physics_object* physics_obj;
 my_emitter* particle_system;
+flocking_system* flock;
 
 //TIME TRACKER
 clock_t prevTime;
@@ -119,6 +121,15 @@ void particleSystemCallback()
 	glutPostRedisplay();
 }
 
+void flockingSystemCallback()
+{
+	float delta = getTime();
+	
+	flock->updateFlocking(delta,w_width,w_height);
+	
+	glutPostRedisplay();
+}
+
 void preDraw() {
 	printf("Display call back %d\n", display_count++);
 
@@ -151,6 +162,15 @@ void particleSystemDraw(void)
 	preDraw();
 	
 	particle_system->draw();
+
+	postDraw();
+}
+
+void flockingSystemDraw(void)
+{
+	preDraw();
+
+	flock->draw();
 
 	postDraw();
 }
@@ -209,6 +229,15 @@ void keyboardCallBack(unsigned char key, int x, int y)
 		glutIdleFunc(particleSystemCallback);
 		glutDisplayFunc(particleSystemDraw);
 	break;
+	case 'F':
+		prevTime = NULL;
+		delete flock;
+		flock = new flocking_system(600,400,0,30);
+		glutIdleFunc(flockingSystemCallback);
+		glutDisplayFunc(flockingSystemDraw);
+	break;
+	case 'S':
+		glutIdleFunc(NULL);
 	default:
 		printf("Unknown command.\n");
 	}

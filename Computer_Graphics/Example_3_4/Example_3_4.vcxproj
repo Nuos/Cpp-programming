@@ -75,6 +75,8 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="flocking_agent.h" />
+    <ClInclude Include="flocking_system.h" />
     <ClInclude Include="my_drawable.h" />
     <ClInclude Include="my_emitter.h" />
     <ClInclude Include="my_particle.h" />
@@ -87,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Example_3_4.cpp" />
+    <ClCompile Include="flocking_agent.cpp" />
+    <ClCompile Include="flocking_system.cpp" />
     <ClCompile Include="my_drawable.cpp" />
     <ClCompile Include="my_emitter.cpp" />
     <ClCompile Include="my_particle.cpp" />

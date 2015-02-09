@@ -45,6 +45,12 @@
     <ClInclude Include="my_emitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="flocking_agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flocking_system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +78,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="my_emitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="flocking_agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="flocking_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

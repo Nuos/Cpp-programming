@@ -7,6 +7,7 @@ class physics_object
 public:
 	float BOUNCE_FACTOR;
 	float ENERGY_LOSS;
+	float MAX_VELOCITY;
 
 	my_vector displacement;
 
@@ -22,6 +23,10 @@ public:
 
 	void disableGravity();
 	void enableGravity();
+
+	inline my_vector getVelocity() { return velocity; }
+	inline void setEnergyLoss(float newVal) { ENERGY_LOSS = newVal; }
+	inline void setMaxVelocity(float newVal) { MAX_VELOCITY = newVal; }
 private:
 	my_vector velocity,gravity,directional_force;
 	float mass;

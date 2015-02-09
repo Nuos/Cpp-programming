@@ -6,6 +6,7 @@ physics_object::physics_object(float newMass, my_drawable* shape)
 {
 	BOUNCE_FACTOR = 0.7;
 	ENERGY_LOSS = 0.9;
+	MAX_VELOCITY = 0;
 
 	displacement = my_vector(shape->x,shape->y,shape->z);
 	velocity = my_vector(0,0,0);
@@ -25,11 +26,19 @@ void physics_object::advance(float deltaTime) {
 	directional_force = directional_force*ENERGY_LOSS;
 	my_vector acceleration = directional_force/mass + gravity;
 
-	printf("Velocity: %f, Displacement: %f, deltaTime: %f, acceleration: %f\n",velocity.y,displacement.y,deltaTime,acceleration.y);
+	//printf("Velocity: %f, Displacement: %f, deltaTime: %f, acceleration: %f\n",velocity.y,displacement.y,deltaTime,acceleration.y);
 
-	displacement = displacement + velocity*deltaTime + acceleration*pow(deltaTime,2)*0.5;
+	//coordinate max velocity if defined
+	if(MAX_VELOCITY != 0) {
+		if(velocity.length() > MAX_VELOCITY) {
+			velocity = *velocity.normalise()*MAX_VELOCITY;
+		}
+	}
+
+	//displacement = displacement + velocity*deltaTime + acceleration*pow(deltaTime,2)*0.5;
 
 	velocity = velocity + acceleration*deltaTime;
+	displacement = displacement + velocity*deltaTime;
 
 	obj->x = displacement.x;
 	obj->y = displacement.y;

@@ -1,22 +1,24 @@
-﻿Build started 09/02/2015 12:46:51.
+﻿Build started 09/02/2015 18:45:21.
      1>Project "C:\Users\Mindy\Desktop\CompGamesProgramming\Computer_Graphics\Example_3_4\Example_3_4.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Example_3_4.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Example_3_4.cpp my_emitter.cpp my_particle.cpp my_vector.cpp physics_object.cpp
-         my_vector.cpp
-         my_particle.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         physics_object.cpp
-         my_emitter.cpp
-         Example_3_4.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt flocking_system.cpp
+         flocking_system.cpp
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(16): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(36): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(44): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(52): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(103): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\mindy\desktop\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(107): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mindy\Desktop\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Example_3_4.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Mindy\Desktop\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mindy\Desktop\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.lib" /MACHINE:X86 Debug\Example_3_4.exe.embed.manifest.res
          Debug\Example_3_4.obj
+         Debug\flocking_agent.obj
+         Debug\flocking_system.obj
          Debug\my_drawable.obj
          Debug\my_emitter.obj
          Debug\my_particle.obj
@@ -38,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.51
+Time Elapsed 00:00:00.84
