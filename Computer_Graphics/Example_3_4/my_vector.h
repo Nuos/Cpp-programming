@@ -16,7 +16,7 @@ public:
 	my_vector crossProduct(my_vector rhs);
 	float dotProduct(my_vector rhs);
 	float length();
-	my_vector* normalise();
+	my_vector normalise();
 
 	float x,y,z;
 };

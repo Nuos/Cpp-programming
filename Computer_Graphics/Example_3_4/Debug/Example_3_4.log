@@ -1,20 +1,12 @@
-﻿Build started 17/02/2015 21:19:45.
+﻿Build started 17/02/2015 21:44:06.
      1>Project "C:\Users\Mindaugas\Documents\GitHub\CompGamesProgramming\Computer_Graphics\Example_3_4\Example_3_4.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Example_3_4.cpp flocking_agent.cpp flocking_system.cpp my_drawable.cpp my_emitter.cpp my_particle.cpp physics_object.cpp
-         physics_object.cpp
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\physics_object.cpp(8): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\physics_object.cpp(10): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\physics_object.cpp(18): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\physics_object.cpp(92): warning C4305: 'argument' : truncation from 'double' to 'float'
-         my_particle.cpp
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\my_particle.cpp(33): warning C4244: 'argument' : conversion from 'double' to 'GLubyte', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Example_3_4.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt flocking_system.cpp my_emitter.cpp
          my_emitter.cpp
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\my_emitter.cpp(17): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\my_emitter.cpp(20): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\my_emitter.cpp(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\my_emitter.cpp(76): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         my_drawable.cpp
          flocking_system.cpp
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(23): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(45): warning C4018: '<' : signed/unsigned mismatch
@@ -28,11 +20,6 @@
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(111): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(132): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_system.cpp(136): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         flocking_agent.cpp
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\flocking_agent.cpp(59): warning C4244: 'argument' : conversion from 'float' to 'GLubyte', possible loss of data
-         Example_3_4.cpp
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\example_3_4.cpp(103): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mindaugas\documents\github\compgamesprogramming\computer_graphics\example_3_4\example_3_4.cpp(111): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mindaugas\Documents\GitHub\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Mindaugas\Documents\GitHub\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mindaugas\Documents\GitHub\CompGamesProgramming\Computer_Graphics\Debug\Example_3_4.lib" /MACHINE:X86 Debug\Example_3_4.obj
@@ -51,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.39
+Time Elapsed 00:00:01.44

@@ -25,7 +25,7 @@ my_emitter::my_emitter(float newX, float newY, float newZ, int noParticles)
 		//get the direction vertor amplified by a random speed
 		float xDir = cos(direction)*magnitude;
 		float yDir = sin(direction)*magnitude;
-		my_vector* directionVector = new my_vector(xDir,yDir,0);
+		my_vector directionVector = my_vector(xDir,yDir,0);
 
 		//generate a particle of random size, lifespan and speed
 		my_particle* p = new my_particle(new my_square(x,y,z,generateSize(),0),generateLifespan(),directionVector);
@@ -69,11 +69,11 @@ my_emitter::~my_emitter(void)
 }
 
 float my_emitter::generateMagnitude() {
-	return rand() % 100;
+	return rand() % 1000;
 }
 
 float my_emitter::generateLifespan() {
-	return rand() % 50 + 255;
+	return rand() % 100 + 1000;
 }
 
 float my_emitter::generateSize() {

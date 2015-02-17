@@ -69,7 +69,7 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 			if(distanceVec.length() < a1->radius) {
 
 				//FOV refinement
-				float angle = acos(a1->getVelocity().normalise()->dotProduct(*distanceVec.normalise()))*180.0/M_PI-180;
+				float angle = acos(a1->getVelocity().normalise().dotProduct(distanceVec.normalise()))*180.0/M_PI-180;
 				if(angle >= -120 && angle <= 120) {
 					//compute alignment
 					alignment = alignment + a2->getVelocity();
@@ -78,7 +78,7 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 					cohesion = cohesion + a2->getDisplacement();
 
 					//compute separation
-					separation = separation + *(a1->getDistanceVector(a2,w_width,w_height)).normalise();
+					separation = separation + (a1->getDistanceVector(a2,w_width,w_height)).normalise();
 
 					neighbourCount++;
 				}
@@ -94,23 +94,23 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 
 			//compute cohesion
 			cohesion = cohesion / neighbourCount;
-			cohesion = *(cohesion - a1->getDisplacement()).normalise()*AGENT_SPEED - a1->getVelocity();
+			cohesion = (cohesion - a1->getDisplacement()).normalise()*AGENT_SPEED - a1->getVelocity();
 			//cohesion = *(cohesion - a1->getDisplacement()).normalise();
 
 			//prioritised dithering - TODO: optimisation, such that this is performed at the beginning, and only the chosen vector is computed
 			float probability = rand() / (RAND_MAX + 1.);
 			if(probability < ALIGNMENT) {
-				a1->changeDirection(*alignment.normalise()*MAX_FORCE,deltaTime);
+				a1->changeDirection(alignment.normalise()*MAX_FORCE,deltaTime);
 			}
 			else {
 				probability = rand() / (RAND_MAX + 1.);
 				if(probability < COHESION) {
-					a1->changeDirection(*cohesion.normalise()*MAX_FORCE,deltaTime);
+					a1->changeDirection(cohesion.normalise()*MAX_FORCE,deltaTime);
 				}
 				else {
 					probability = rand() / (RAND_MAX + 1.);
 					if(probability < SEPARATION) {
-						a1->changeDirection(*separation.normalise()*MAX_FORCE,deltaTime);
+						a1->changeDirection(separation.normalise()*MAX_FORCE,deltaTime);
 					}
 					else
 						a1->wander(deltaTime);

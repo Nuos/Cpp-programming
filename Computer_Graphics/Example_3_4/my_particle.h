@@ -5,7 +5,7 @@
 class my_particle
 {
 public:
-	my_particle(my_drawable*, float, my_vector*);
+	my_particle(my_drawable*, float, my_vector);
 	~my_particle(void);
 
 	void update(float);
@@ -18,6 +18,6 @@ public:
 private:
 	float lifespan, lifespanMax;	
 	physics_object* obj;
-	my_vector* direction;
+	my_vector direction;
 };
 

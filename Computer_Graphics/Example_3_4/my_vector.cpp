@@ -54,7 +54,7 @@ float my_vector::length() {
 	return sqrt(pow(x,2)+pow(y,2)+pow(z,2));
 }
 
-my_vector* my_vector::normalise() {
+my_vector my_vector::normalise() {
 	float len = length();
-	return new my_vector(x/len,y/len,z/len);
+	return my_vector(x/len,y/len,z/len);
 }

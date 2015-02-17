@@ -2,7 +2,7 @@
 #include "my_particle.h"
 
 
-my_particle::my_particle(my_drawable* shape, float life, my_vector* dir)
+my_particle::my_particle(my_drawable* shape, float life, my_vector dir)
 {
 	//create the particle for the shape specified
 	obj = new physics_object(0.5,shape);
@@ -10,7 +10,7 @@ my_particle::my_particle(my_drawable* shape, float life, my_vector* dir)
 	lifespanMax = life;
 	direction = dir;
 	//apply the directional force given
-	obj->applyForce(direction->x,direction->y,direction->z);
+	obj->applyForce(direction.x,direction.y,direction.z);
 }
 
 
@@ -46,7 +46,7 @@ void my_particle::reset(float newX, float newY, float newZ, float magnitude) {
 	obj->applyImpulse(0,0,0);
 
 	//apply the new directional force
-	direction = direction->normalise();
-	*direction = *direction * magnitude;
-	obj->applyForce(direction->x,direction->y,direction->z);
+	direction = direction.normalise();
+	direction = direction * magnitude;
+	obj->applyForce(direction.x,direction.y,direction.z);
 }

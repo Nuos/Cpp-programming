@@ -41,7 +41,7 @@ void physics_object::advance(float deltaTime) {
 	//coordinate max velocity if defined
 	if(MAX_VELOCITY != 0) {
 		if(velocity.length() > MAX_VELOCITY) {
-			velocity = *velocity.normalise()*MAX_VELOCITY;
+			velocity = velocity.normalise()*MAX_VELOCITY;
 		}
 	}
 
