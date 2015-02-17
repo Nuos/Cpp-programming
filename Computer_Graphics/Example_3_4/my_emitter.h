@@ -15,5 +15,9 @@ private:
 	std::vector<my_particle*> *particles;
 	float x,y,z;
 	int noOfParticles;
+	float generateMagnitude();
+	float generateLifespan();
+	float generateSize();
+	void resetParticles(std::vector<my_particle*>);
 };
 

@@ -36,7 +36,7 @@
 // Square size
 #define size 50.0
 
-//REFERENCE TO OBJECTS
+//REFERENCE TO OBJECTS IN DEMO
 physics_object* physics_obj;
 my_emitter* particle_system;
 flocking_system* flock;
@@ -74,7 +74,10 @@ int square_dy = 1; // Incremental Rate Change for square_y - *** New for Solutio
 // IDLE CALLBACK ROUTINE 
 //======================================================
 float getTime() {
+	//generate the time elapsed from last physics step - used for making physics consistent with system clock
 	clock_t currTime = clock();
+
+	//check if it's our first tick
 	if(prevTime == NULL) {
 		prevTime = currTime;
 	}
@@ -88,10 +91,13 @@ float getTime() {
 
 void bouncingBallCallback() {
 	
+	//get delta time
 	float delta = getTime();
 
+	//advance the ball
 	physics_obj->advance(delta);
 
+	//collisions
 	if (physics_obj->displacement.x > w_width) {
 		physics_obj->bounce(-1,1,1); // Reverse direction if at width edges (as the change is on the X-Axis)
 		physics_obj->displacement.x = w_width;
@@ -116,6 +122,7 @@ void particleSystemCallback()
 {
 	float delta = getTime();
 	
+	//just advance the particle system
 	particle_system->update(delta);
 	
 	glutPostRedisplay();
@@ -125,6 +132,7 @@ void flockingSystemCallback()
 {
 	float delta = getTime();
 	
+	//advance the flocking system
 	flock->updateFlocking(delta,w_width,w_height);
 	
 	glutPostRedisplay();
@@ -216,23 +224,26 @@ void keyboardCallBack(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case 'B':
+		//ball demo
 		prevTime = NULL;
 		delete physics_obj;
-		physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
+		physics_obj = new physics_object(0.5,new my_sphere(400,400,-50,50,50));
 		glutIdleFunc(bouncingBallCallback);
 		glutDisplayFunc(bouncingBallDraw);
 	break;
 	case 'P':
+		//particle demo
 		prevTime = NULL;
 		delete particle_system;
-		particle_system = new my_emitter(600,400,0,360);
+		particle_system = new my_emitter(400,400,0,360);
 		glutIdleFunc(particleSystemCallback);
 		glutDisplayFunc(particleSystemDraw);
 	break;
 	case 'F':
+		//flocking demo
 		prevTime = NULL;
 		delete flock;
-		flock = new flocking_system(600,400,0,30);
+		flock = new flocking_system(400,400,0,50);
 		glutIdleFunc(flockingSystemCallback);
 		glutDisplayFunc(flockingSystemDraw);
 	break;
@@ -257,7 +268,7 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(10,10);
 	glutInitWindowSize(w_width,w_height);	
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-	glutCreateWindow("Example 3.4 - Bouncing Square Solution");
+	glutCreateWindow("Computer Games Programming Lab exercises");
 
 	// Set Projection Mode and Volume
 	glMatrixMode(GL_PROJECTION);
@@ -266,7 +277,7 @@ int main(int argc, char** argv)
 	glMatrixMode(GL_MODELVIEW);
 
 	// Set clear color to black and clear window 
-	glClearColor (1.0, 0.0, 0.0, 1.0);
+	glClearColor (1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutSwapBuffers();
 
@@ -286,11 +297,6 @@ int main(int argc, char** argv)
 	printf("B key - demonstrates the bouncing ball.\n");
 	printf("P key - demonstrates the particle system.\n");
 	printf("F key - demonstrates the flocking behaviour.\n");
-
-	//create sphere
-	//physics_obj = new physics_object(0.5,new my_sphere(200,400,-50,50,50));
-	//create particle system
-	//particle_system = new my_emitter(600,400,0,360);
 
 	// Enter main event loop
 	glutMainLoop();

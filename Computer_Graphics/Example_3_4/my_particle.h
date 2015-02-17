@@ -5,7 +5,7 @@
 class my_particle
 {
 public:
-	my_particle(my_drawable*, int, my_vector*);
+	my_particle(my_drawable*, float, my_vector*);
 	~my_particle(void);
 
 	void update(float);
@@ -13,10 +13,10 @@ public:
 
 	void reset(float,float,float,float);
 
-	inline bool isDead() { return lifespan == 0; };
+	inline bool isDead() { return lifespan <= 0; };
 
 private:
-	int lifespan, lifespanMax;	
+	float lifespan, lifespanMax;	
 	physics_object* obj;
 	my_vector* direction;
 };
