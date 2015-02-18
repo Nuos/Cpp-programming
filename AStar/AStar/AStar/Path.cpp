@@ -65,8 +65,8 @@ void CPath::InsertIntoOpenList(int x, int y)
 			//cost to start is defined by the previous node's cost and the transition cost to current node
 			cost_to_start = ClosedList.back().StartCost + base_cost;
 
-			//use euclidean distance for heuristic cost
-			cost_to_goal = sqrt(pow(x - goal_x, 2) + pow(y - goal_y, 2));
+			//use manhattan distance
+			cost_to_goal = abs(x - goal_x) + abs(y - goal_y);
 
 			tempNode.StartCost = cost_to_start;
 			tempNode.TotalCost = tempNode.StartCost + cost_to_goal;
