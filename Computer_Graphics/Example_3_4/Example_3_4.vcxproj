@@ -84,6 +84,7 @@
     <ClInclude Include="my_particle.h" />
     <ClInclude Include="my_sphere.h" />
     <ClInclude Include="my_square.h" />
+    <ClInclude Include="my_triangle.h" />
     <ClInclude Include="my_vector.h" />
     <ClInclude Include="physics_object.h" />
     <ClInclude Include="stdafx.h" />
@@ -98,6 +99,7 @@
     <ClCompile Include="my_particle.cpp" />
     <ClCompile Include="my_sphere.cpp" />
     <ClCompile Include="my_square.cpp" />
+    <ClCompile Include="my_triangle.cpp" />
     <ClCompile Include="my_vector.cpp" />
     <ClCompile Include="physics_object.cpp" />
     <ClCompile Include="stdafx.cpp">

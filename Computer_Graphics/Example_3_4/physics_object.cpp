@@ -91,3 +91,11 @@ void physics_object::enableGravity() {
 	//enable gravity
 	gravity = my_vector(0,-9.81,0);
 }
+
+void physics_object::rotate2D(my_vector vec) {
+	my_vector vecNorm = vec.normalise();
+	float rotation = acos(vecNorm.dotProduct(my_vector(0,1.0,0)))* 180.0 / M_PI;
+	//float rotation = atan(vecNorm.y / vecNorm.x*1.0)* 180.0 /M_PI;
+	printf("Rotation: %f, x: %f, y: %f \n", rotation, vecNorm.x, vecNorm.y);
+	obj->theta = rotation;
+}

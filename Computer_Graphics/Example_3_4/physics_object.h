@@ -24,6 +24,8 @@ public:
 	void disableGravity();
 	void enableGravity();
 
+	void rotate2D(my_vector);
+
 	inline my_vector getVelocity() { return velocity; }
 	inline void setEnergyLoss(float newVal) { ENERGY_LOSS = newVal; }
 	inline void setMaxVelocity(float newVal) { MAX_VELOCITY = newVal; }

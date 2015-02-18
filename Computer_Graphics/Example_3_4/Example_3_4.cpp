@@ -27,6 +27,7 @@
 #include "my_sphere.h"
 #include "physics_object.h"
 #include "my_emitter.h"
+#include "my_triangle.h"
 #include <ctime>
 #include "flocking_system.h"
 

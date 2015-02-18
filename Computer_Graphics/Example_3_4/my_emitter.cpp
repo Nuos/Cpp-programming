@@ -69,7 +69,7 @@ my_emitter::~my_emitter(void)
 }
 
 float my_emitter::generateMagnitude() {
-	return rand() % 1000;
+	return rand() % 2000;
 }
 
 float my_emitter::generateLifespan() {

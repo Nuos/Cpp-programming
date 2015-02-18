@@ -1,12 +1,13 @@
 #include "StdAfx.h"
 #include "flocking_system.h"
 #include "my_square.h"
+#include "my_triangle.h"
 
 flocking_system::flocking_system(float newX, float newY, float newZ, int noOfAgents)
 {
 	//boid constants
 	AGENT_SPEED = 100;
-	MAX_FORCE = 200;
+	MAX_FORCE = 300;
 	ALIGNMENT = 0.5;
 	COHESION = 0.5;
 	SEPARATION = 0.5;
@@ -26,7 +27,8 @@ flocking_system::flocking_system(float newX, float newY, float newZ, int noOfAge
 		my_vector directionVector = my_vector(xDir,yDir,0);
 
 		//create the boid as a square going in a direction
-		flocking_agent* a = new flocking_agent(new my_square(xPos,yPos,newZ,1.0,0),directionVector,70, AGENT_SPEED);
+		//flocking_agent* a = new flocking_agent(new my_square(xPos,yPos,newZ,1.0,0),directionVector,70, AGENT_SPEED);
+		flocking_agent* a = new flocking_agent(new my_triangle(xPos,yPos,newZ,5.0,angle),directionVector,70, AGENT_SPEED);
 
 		agents->push_back(a);
 	}
@@ -78,7 +80,7 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 					cohesion = cohesion + a2->getDisplacement();
 
 					//compute separation
-					separation = separation + (a1->getDistanceVector(a2,w_width,w_height)).normalise();
+					separation = separation + (distanceVec).normalise();
 
 					neighbourCount++;
 				}
@@ -97,7 +99,7 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 			cohesion = (cohesion - a1->getDisplacement()).normalise()*AGENT_SPEED - a1->getVelocity();
 			//cohesion = *(cohesion - a1->getDisplacement()).normalise();
 
-			//prioritised dithering - TODO: optimisation, such that this is performed at the beginning, and only the chosen vector is computed
+			//prioritised dithering
 			float probability = rand() / (RAND_MAX + 1.);
 			if(probability < ALIGNMENT) {
 				a1->changeDirection(alignment.normalise()*MAX_FORCE,deltaTime);

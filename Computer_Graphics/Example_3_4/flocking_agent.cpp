@@ -9,7 +9,7 @@ flocking_agent::flocking_agent(my_drawable* shape, my_vector dir, float range, f
 
 	//it starts out moving in a specified direction
 	obj->applyImpulse(dir.x,dir.y,dir.z);
-
+	obj->rotate2D(dir);
 	//it has a range of sight
 	radius = range;
 
@@ -32,7 +32,7 @@ flocking_agent::~flocking_agent(void)
 
 void flocking_agent::changeDirection(my_vector newDirection, float deltaTime) {
 	//apply a force in the direction specified and advance the simulation
-	obj->applyForce(newDirection.x,newDirection.y,newDirection.z);
+	obj->applyForce(newDirection.x, newDirection.y, newDirection.z);
 	obj->advance(deltaTime);
 }
 
@@ -55,6 +55,7 @@ my_vector flocking_agent::getDistanceVector(flocking_agent* agent, int w_width, 
 }
 
 void flocking_agent::draw() {
+	obj->rotate2D(obj->getVelocity());
 	glPushMatrix();
 		glColor3ub( colour.x, colour.y, colour.z);
 		obj->draw();

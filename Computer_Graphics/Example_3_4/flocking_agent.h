@@ -11,7 +11,9 @@ public:
 	inline my_vector getDisplacement() { return obj->displacement; }
 	inline void setDisplacement(my_vector newValue) { obj->setDisplacement(newValue); }
 
-	inline void wander(float deltaTime) { obj->advance(deltaTime); }
+	inline void wander(float deltaTime) {
+		obj->rotate2D(obj->getVelocity()); obj->advance(deltaTime);
+	}
 
 	void changeDirection(my_vector, float);
 	my_vector getDistanceVector(flocking_agent*,int,int);
