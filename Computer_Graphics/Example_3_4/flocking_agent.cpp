@@ -9,7 +9,8 @@ flocking_agent::flocking_agent(my_drawable* shape, my_vector dir, float range, f
 
 	//it starts out moving in a specified direction
 	obj->applyImpulse(dir.x,dir.y,dir.z);
-	obj->rotate2D(dir);
+	obj->rotate2D(obj->getVelocity());
+
 	//it has a range of sight
 	radius = range;
 
@@ -19,7 +20,7 @@ flocking_agent::flocking_agent(my_drawable* shape, my_vector dir, float range, f
 	//it does not lose directional movement energy
 	obj->setEnergyLoss(1.0);
 
-	//it has a maximum velocity
+	//it has a maximum velocity and force
 	obj->setMaxVelocity(max_vel);
 
 	colour = my_vector(255,0,0);
@@ -32,8 +33,9 @@ flocking_agent::~flocking_agent(void)
 
 void flocking_agent::changeDirection(my_vector newDirection, float deltaTime) {
 	//apply a force in the direction specified and advance the simulation
-	obj->applyForce(newDirection.x, newDirection.y, newDirection.z);
+	obj->applyForce(newDirection.x, newDirection.y, newDirection.z); 
 	obj->advance(deltaTime);
+	obj->rotate2D(obj->getVelocity());
 }
 
 my_vector flocking_agent::getDistanceVector(flocking_agent* agent, int w_width, int w_height) {
@@ -46,16 +48,15 @@ my_vector flocking_agent::getDistanceVector(flocking_agent* agent, int w_width, 
 	float yDistAlt = w_height - yDist;
 
 	//check if wrapped distance is shorter than regular distance
-	if(abs(xDistAlt) < abs(xDist))
-		xDist = xDistAlt;
-	if(abs(yDistAlt) < abs(yDist))
-		yDist = yDistAlt;
+	//if(abs(xDistAlt) < abs(xDist))
+	//	xDist = xDistAlt;
+	//if(abs(yDistAlt) < abs(yDist))
+	//	yDist = yDistAlt;
 
 	return my_vector(xDist,yDist,0);
 }
 
 void flocking_agent::draw() {
-	obj->rotate2D(obj->getVelocity());
 	glPushMatrix();
 		glColor3ub( colour.x, colour.y, colour.z);
 		obj->draw();

@@ -7,18 +7,22 @@ flocking_system::flocking_system(float newX, float newY, float newZ, int noOfAge
 {
 	//boid constants
 	AGENT_SPEED = 100;
-	MAX_FORCE = 300;
-	ALIGNMENT = 0.5;
-	COHESION = 0.5;
-	SEPARATION = 0.5;
+	MOVEMENT_MAGNITUDE = 50;
+	ALIGNMENT = 0.8;
+	COHESION = 0.4;
+	SEPARATION = 0.2;
+
+	float range_of_sight = 70;
+
+	//noOfAgents = 2;
 
 	//list to store the agents in
 	agents = new std::vector<flocking_agent*>();
 
 	for(int i = 0; i < noOfAgents; i++) {
 		//initialise positions at random offsets from a point
-		float xPos = rand() % 50 + newX;
-		float yPos = rand() % 50 + newY;
+		float xPos = rand() % 600 + newX - 300;
+		float yPos = rand() % 600 + newY - 300;
 
 		//initialise the direction of each boid
 		float angle = (rand() % 360)*M_PI/180.0;
@@ -26,9 +30,8 @@ flocking_system::flocking_system(float newX, float newY, float newZ, int noOfAge
 		float yDir = sin(angle)*AGENT_SPEED;
 		my_vector directionVector = my_vector(xDir,yDir,0);
 
-		//create the boid as a square going in a direction
 		//flocking_agent* a = new flocking_agent(new my_square(xPos,yPos,newZ,1.0,0),directionVector,70, AGENT_SPEED);
-		flocking_agent* a = new flocking_agent(new my_triangle(xPos,yPos,newZ,5.0,angle),directionVector,70, AGENT_SPEED);
+		flocking_agent* a = new flocking_agent(new my_triangle(xPos, yPos, newZ, 5.0, angle), directionVector, range_of_sight, AGENT_SPEED);
 
 		agents->push_back(a);
 	}
@@ -92,27 +95,27 @@ void flocking_system::updateFlocking(float deltaTime, int w_width, int w_height)
 			a1->setColour(my_vector(255,255,0));
 
 			//compute alignment
-			alignment = (alignment / neighbourCount) - a1->getVelocity();
+			alignment = (alignment / neighbourCount*1.0) - a1->getVelocity();
 
 			//compute cohesion
-			cohesion = cohesion / neighbourCount;
+			cohesion = cohesion / neighbourCount*1.0;
 			cohesion = (cohesion - a1->getDisplacement()).normalise()*AGENT_SPEED - a1->getVelocity();
-			//cohesion = *(cohesion - a1->getDisplacement()).normalise();
+			//cohesion = (cohesion - a1->getDisplacement());
 
 			//prioritised dithering
 			float probability = rand() / (RAND_MAX + 1.);
 			if(probability < ALIGNMENT) {
-				a1->changeDirection(alignment.normalise()*MAX_FORCE,deltaTime);
+				a1->changeDirection(alignment.normalise()*MOVEMENT_MAGNITUDE,deltaTime);
 			}
 			else {
 				probability = rand() / (RAND_MAX + 1.);
 				if(probability < COHESION) {
-					a1->changeDirection(cohesion.normalise()*MAX_FORCE,deltaTime);
+					a1->changeDirection(cohesion.normalise()*MOVEMENT_MAGNITUDE, deltaTime);
 				}
 				else {
 					probability = rand() / (RAND_MAX + 1.);
 					if(probability < SEPARATION) {
-						a1->changeDirection(separation.normalise()*MAX_FORCE,deltaTime);
+						a1->changeDirection(separation.normalise()*MOVEMENT_MAGNITUDE, deltaTime);
 					}
 					else
 						a1->wander(deltaTime);

@@ -42,6 +42,11 @@ physics_object* physics_obj;
 my_emitter* particle_system;
 flocking_system* flock;
 
+//controllable variables for flocking system
+float alignment;
+float cohesion;
+float separation;
+
 //TIME TRACKER
 clock_t prevTime;
 
@@ -140,7 +145,7 @@ void flockingSystemCallback()
 }
 
 void preDraw() {
-	printf("Display call back %d\n", display_count++);
+	//printf("Display call back %d\n", display_count++);
 
 	glClearColor (0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -216,6 +221,14 @@ void mouseCallBack(int btn, int state, int x, int y)
     if(btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN)   exit(0);
 }
 
+void adjustFlock(float a, float c, float s) {
+	if (flock != NULL) {
+		flock->ALIGNMENT = a;
+		flock->COHESION = c;
+		flock->SEPARATION = s;
+	}
+}
+
 //======================================================
 // KEYBOARD CALLBACK ROUTINE 
 //======================================================
@@ -250,6 +263,23 @@ void keyboardCallBack(unsigned char key, int x, int y)
 	break;
 	case 'S':
 		glutIdleFunc(NULL);
+		break;
+	case '1':
+		adjustFlock(0.8, 0.4, 0.2);
+		printf("Flock mixed behaviour\n");
+		break;
+	case '2':
+		adjustFlock(1, 0, 0);
+		printf("Flock alignment\n");
+		break;
+	case '3':
+		adjustFlock(0,1,0);
+		printf("Flock cohesion\n");
+		break;
+	case '4':
+		adjustFlock(0,0,1);
+		printf("Flock separation\n");
+		break;
 	default:
 		printf("Unknown command.\n");
 	}
@@ -298,6 +328,10 @@ int main(int argc, char** argv)
 	printf("B key - demonstrates the bouncing ball.\n");
 	printf("P key - demonstrates the particle system.\n");
 	printf("F key - demonstrates the flocking behaviour.\n");
+	printf("1 key - demonstrates the flocking behaviour. (mixed parameters)\n");
+	printf("2 key - demonstrates the flocking behaviour. (alignment)\n");
+	printf("3 key - demonstrates the flocking behaviour. (cohesion)\n");
+	printf("4 key - demonstrates the flocking behaviour. (separation)\n");
 
 	// Enter main event loop
 	glutMainLoop();

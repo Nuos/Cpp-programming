@@ -10,11 +10,16 @@ public:
 
 	void updateFlocking(float,int,int);
 
+	//agent parameters
 	float AGENT_SPEED;
+
+	//swarming parameters
 	float ALIGNMENT;
 	float COHESION;
 	float SEPARATION;
-	float MAX_FORCE;
+
+	//magnitude of steering in one step
+	float MOVEMENT_MAGNITUDE;
 
 	void draw();
 private:
